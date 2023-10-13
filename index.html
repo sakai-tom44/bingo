@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bingo司会アプリ</title>
+    <style>
+        p {
+            font-size: 28px;
+        }
+
+        .main {
+            text-align: center;
+            width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        #bingo-board {
+            text-align: center;
+            font-size: 200px;
+        }
+
+        #log-board {
+            text-align: center;
+            font-size: 35px;
+        }
+
+        input[type="button"] {
+            width: 200px;
+            height: 50px;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div id="bingo-board">BINGO</div>
+        <input type="button" value="次の数字" onclick="generateRandomNumber()">
+        <p>これまでに出た数字</p>
+        <div id="log-board"></div>
+    </div>
+    <script>
+        const calledNumbers = [];
+
+        const bingoBoard = document.getElementById('bingo-board');
+        const logBoard = document.getElementById('log-board');
+
+        function generateRandomNumber() {
+            const min = 1;
+            const max = 75;
+            let randomNumber;
+
+            if (calledNumbers.length !== max) {
+                do {
+                    randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+                } while (calledNumbers.includes(randomNumber));
+
+                calledNumbers.push(randomNumber);
+
+                bingoBoard.textContent = `${randomNumber}`;
+                let str = "";
+                for (let i = 0; i < calledNumbers.length; i++) {
+                    str += calledNumbers[i] + ",\n";
+                }
+                logBoard.textContent = str;
+            }
+        }
+    </script>
+</body>
+
+</html>
